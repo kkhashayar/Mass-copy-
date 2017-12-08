@@ -1,0 +1,36 @@
+import os,shutil,random
+
+print("example:      c:\\")
+path  = input("Enter the source path: ")
+
+print("example:       rtf")
+ttype = input("Enter file type: ")
+
+print("example: C:\\Users\\user\\Desktop\\temp")
+dest  = input("Enter the destination path: ")
+
+count1=0
+count2=0
+
+for root,dirs,files in os.walk(path):
+    for file in files:
+        path_file = os.path.join(root,file)
+
+
+        if file.lower().endswith(ttype.lower()):
+            if os.path.isfile(os.path.join(dest,file)):
+                name,ext = (os.path.splitext(file))
+
+                file = "{name}_{rand}.{ext}".format(name = name, rand=random.randint(1,1000),
+                                                   ext=ttype)
+                shutil.copy(path_file,os.path.join(dest,file))
+                count1 = count1 + 1
+                print("working...")
+            else:
+                shutil.copy(path_file,os.path.join(dest,file))
+                count2 = count2 + 1
+                print("working...")
+                
+print(count1," files copy and renamed")
+print()
+print(count2," files copied")
